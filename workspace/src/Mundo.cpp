@@ -10,6 +10,8 @@
 #include <string.h>
 #include <math.h>
 
+//#include <iostream>
+
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -36,6 +38,8 @@ void CMundo::InitGL()
 	gluPerspective( 40.0, 800/600.0f, 0.1, 150);
 }
 
+//funcion global, usamos funciones de open gl incluidas en la libreria glut
+//para pintar el nombre de los jugadores
 void print(char *mensaje, int x, int y, float r, float g, float b)
 {
 	glDisable (GL_LIGHTING);
@@ -115,9 +119,11 @@ void CMundo::OnDraw()
 
 void CMundo::OnTimer(int value)
 {	
-	jugador1.Mueve(0.025f);
-	jugador2.Mueve(0.025f);
-	esfera.Mueve(0.025f);
+//la nueva posicion sera despues del tiempo del ontimer 0,025 s 
+//porque estoy regenerando y recalculando todo por medio de ese tiempo
+	jugador1.Mueve(0.016f);
+	jugador2.Mueve(0.016f);
+	esfera.Mueve(0.016f);
 	int i;
 	for(i=0;i<paredes.size();i++)
 	{
@@ -126,8 +132,11 @@ void CMundo::OnTimer(int value)
 		paredes[i].Rebota(jugador2);
 	}
 
+	//Rebote con las raquetas
 	jugador1.Rebota(esfera);
 	jugador2.Rebota(esfera);
+	
+	//Si rebota con la pared izquierda es punto para jugador 2
 	if(fondo_izq.Rebota(esfera))
 	{
 		esfera.centro.x=0;
@@ -136,7 +145,8 @@ void CMundo::OnTimer(int value)
 		esfera.velocidad.y=2+2*rand()/(float)RAND_MAX;
 		puntos2++;
 	}
-
+	
+	//Si rebota con la pared derecha es punto para jugador 1
 	if(fondo_dcho.Rebota(esfera))
 	{
 		esfera.centro.x=0;
@@ -150,16 +160,28 @@ void CMundo::OnTimer(int value)
 
 void CMundo::OnKeyboardDown(unsigned char key, int x, int y)
 {
+	//printf("Tecla pulsada: %c\n", key);
 	switch(key)
 	{
 //	case 'a':jugador1.velocidad.x=-1;break;
 //	case 'd':jugador1.velocidad.x=1;break;
+//Con el teclado le cambio la velocidad si quiero lo puedo hacer mas rapido o lento
 	case 's':jugador1.velocidad.y=-4;break;
 	case 'w':jugador1.velocidad.y=4;break;
 	case 'l':jugador2.velocidad.y=-4;break;
 	case 'o':jugador2.velocidad.y=4;break;
-
+   	//default:
+        // Código si ningún caso coincide (opcional)
+	//jugador1.velocidad.y=0;
+	//jugador2.velocidad.y=0;
+	//break;
 	}
+	//printf("Velocidad jugador 1: %f\n", jugador1.velocidad.y);
+    	//printf("Velocidad jugador 2: %f\n", jugador2.velocidad.y);
+    	//if (std::cin.rdbuf()->in_avail() == 0) {
+    	//jugador1.velocidad.y=0;
+	//jugador2.velocidad.y=0;
+    	//}
 }
 
 void CMundo::Init()

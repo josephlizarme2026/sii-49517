@@ -32,7 +32,17 @@ void Esfera::Dibuja()
 	glPopMatrix();
 }
 
+//el parametro t es el tiempo
 void Esfera::Mueve(float t)
 {
-
+	float gravedad = 9.81f;
+	
+	//suponiendo que no dejo caer la bola sino que la lanzo
+	//y tengo una velocidad inicial, descompiendo el vector velocidad 
+	//tendria una velocidad en x en y ,
+	//entonces obtengo los desplazamientos en x en y, y su vector desplazamiento
+	centro.x = centro.x + velocidad.x * t;
+	centro.y = centro.y + velocidad.y * t - 0.5f * gravedad * t * t;
+	//centro.y = centro.y + velocidad.y * t ;
+    
 }
