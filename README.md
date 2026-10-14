@@ -1,44 +1,60 @@
-# Sistemas Informáticos Industriales
+# Nombre del proyecto
 
-![UPM](https://img.shields.io/badge/UPM-ETSIDI-red)
-![Curso](https://img.shields.io/badge/Curso-2026--2027-blue)
-![Lenguaje](https://img.shields.io/badge/C-Programming-00599C?logo=c)
-![Linux](https://img.shields.io/badge/Linux-Ubuntu-E95420?logo=ubuntu)
-![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git)
+Breve descripción del proyecto y de su objetivo principal.
 
-Material docente de la asignatura **Sistemas Informáticos Industriales** de la **Escuela Técnica Superior de Ingeniería y Diseño Industrial (ETSIDI)** de la **Universidad Politécnica de Madrid (UPM)**.
+## 📋 Índice
 
----
+- [Descripción](#-descripción)
+- [Estructura del proyecto](#-estructura-del-proyecto)
+- [Requisitos](#-requisitos)
+- [Compilación](#-compilación)
+- [Ejecución](#-ejecución)
+- [Autor](#-autor)
+- [Licencia](#-licencia)
 
 ## 📖 Descripción
 
-Este repositorio contiene el material utilizado en las prácticas de la asignatura **Sistemas Informáticos Industriales**, incluyendo los guiones y el código de inicio.
+Describe el propósito del proyecto, su funcionamiento y las funcionalidades principales.
 
-El objetivo de la asignatura es introducir en el desarrollo de aplicaciones para sistemas informáticos industriales, haciendo especial énfasis en el uso del lenguaje C y del sistema operativo Linux.
+## 📁 Estructura del proyecto
 
----
+proyecto/ ├── README.md ├── src/ │ └── main.cpp ├── include/ │ └── funciones.hpp ├── build/ ├── CMakeLists.txt └── Makefile
 
-## 📚 Wiki
 
-La documentación detallada de cada una de las prácticas se encuentra en la Wiki del repositorio.
+## ⚙️ Requisitos
 
-➡️ **Acceso a la Wiki:**  
-https://github.com/raquelcedazo/sistemas-informaticos-industriales/wiki
+- Compilador de C++ (GCC/G++).
+- GNU Make.
+- CMake (opcional, si se utiliza).
+- Sistema operativo compatible.
 
----
+## 🔨 Compilación
 
-## 🎓 Profesorado
+### Con Make
 
-Asignatura impartida por el **Departamento de Ingeniería Eléctrica, Electrónica, Automática y Física Aplicada** de la **Universidad Politécnica de Madrid**:
+make
 
-- **Raquel Cedazo** *(coordinadora de las prácticas)*
-- **David Álvarez**
-- **Imanol Izcara**
 
----
+### Con CMake
 
-## 🤝 Contribuciones
+cmake -S . -B build cmake --build build
 
-Este repositorio tiene finalidad exclusivamente docente.
 
-Si detectas algún error o tienes alguna sugerencia de mejora, puedes comunicarlo al profesorado de la asignatura.
+## ▶️ Ejecución
+
+Si el ejecutable se encuentra en el directorio `build/`:
+
+./build/programa
+
+
+Ajusta la ruta según la configuración del proyecto.
+
+## 👤 Autor
+
+- **Nombre:** Tu nombre
+- **GitHub:** [Tu perfil](https://github.com/tu-usuario)
+
+## 📄 Licencia
+
+Este proyecto se distribuye bajo la licencia MIT.
+Consulta el archivo `LICENSE` para obtener más información.
