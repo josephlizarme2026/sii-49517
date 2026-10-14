@@ -1,0 +1,19 @@
+# Directorio de compilación
+workspace/build/
+
+# Archivos objeto
+*.o
+*.obj
+
+# Ejecutables
+*.exe
+a.out
+
+# Archivos temporales
+*~
+*.swp
+*.tmp
+
+# Configuración de editores
+.vscode/
+.idea/
