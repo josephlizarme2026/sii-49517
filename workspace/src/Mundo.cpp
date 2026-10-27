@@ -10,6 +10,9 @@
 #include <string.h>
 #include <math.h>
 
+#include <fcntl.h>
+#include <unistd.h>
+
 //#include <iostream>
 
 //////////////////////////////////////////////////////////////////////
@@ -18,12 +21,17 @@
 
 CMundo::CMundo()
 {
+	fd = -1;
 	Init();
 }
 
 CMundo::~CMundo()
 {
-
+	// Cerrar la FIFO
+	if (fd != -1)
+	{
+	close(fd);
+	}
 }
 
 void CMundo::InitGL()
@@ -136,6 +144,9 @@ void CMundo::OnTimer(int value)
 	jugador1.Rebota(esfera);
 	jugador2.Rebota(esfera);
 	
+	//mensaje al marca punto
+	char mensaje[100];
+	
 	//Si rebota con la pared izquierda es punto para jugador 2
 	if(fondo_izq.Rebota(esfera))
 	{
@@ -144,6 +155,11 @@ void CMundo::OnTimer(int value)
 		esfera.velocidad.x=2+2*rand()/(float)RAND_MAX;
 		esfera.velocidad.y=2+2*rand()/(float)RAND_MAX;
 		puntos2++;
+		
+	// Enviar el mensaje al logger
+	sprintf(mensaje,"Jugador 2 marca 1 punto, lleva un total de %d puntos.\n",puntos2);
+	write(fd, mensaje, strlen(mensaje));	
+	
 	}
 	
 	//Si rebota con la pared derecha es punto para jugador 1
@@ -154,6 +170,11 @@ void CMundo::OnTimer(int value)
 		esfera.velocidad.x=-2-2*rand()/(float)RAND_MAX;
 		esfera.velocidad.y=-2-2*rand()/(float)RAND_MAX;
 		puntos1++;
+		
+	// Enviar el mensaje al logger
+	sprintf(mensaje,"Jugador 1 marca 1 punto, lleva un total de %d puntos.\n",puntos1);
+	write(fd, mensaje, strlen(mensaje));	
+			
 	}
 
 }
@@ -214,4 +235,13 @@ void CMundo::Init()
 	jugador2.g=0;
 	jugador2.x1=6;jugador2.y1=-1;
 	jugador2.x2=6;jugador2.y2=1;
+	
+	// Abrir la FIFO en modo escritura
+	fd = open("tuberia", O_WRONLY);
+
+	if (fd == -1)
+	{
+	perror("Error al abrir la FIFO");
+	exit(1);
+	}
 }
