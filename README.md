@@ -1,10 +1,11 @@
 # Nombre del proyecto
 
-Breve descripción del proyecto y de su objetivo principal.
+Juego del pang.
 
 ## 📋 Índice
 
 - [Descripción](#-descripción)
+- [Actualizaciones](#-actualizaciones)
 - [Estructura del proyecto](#-estructura-del-proyecto)
 - [Requisitos](#-requisitos)
 - [Compilación](#-compilación)
@@ -14,7 +15,13 @@ Breve descripción del proyecto y de su objetivo principal.
 
 ## 📖 Descripción
 
-Describe el propósito del proyecto, su funcionamiento y las funcionalidades principales.
+Implementacion del juego del pang, mejorandolo en cada practica, añadiendo nuevas funcionalidades. El juego de pang consiste en que se controlan unas raquetas representadas con rectangulos para hacer rebotar pelota representada por una esfera. De tal forma que si el jugador no es capaz de golpear la pelota con la raqueta pierde un punto.
+
+## 📖 Actualizaciones
+
+-Se crea escenario
+-Se añade dinamica entre objetos del escenario en concreto rebote raqueta pelota
+-Se crea un logger que registre los puntos y se cierra el programa cuando se algun jugador llega a los tres puntos
 
 ## 📁 Estructura del proyecto
 
