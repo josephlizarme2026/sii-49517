@@ -160,6 +160,18 @@ void CMundo::OnTimer(int value)
 	sprintf(mensaje,"Jugador 2 marca 1 punto, lleva un total de %d puntos.\n",puntos2);
 	write(fd, mensaje, strlen(mensaje));	
 	
+	// Cerrar la FIFO si el jugador 2 alcanza 3 puntos
+		if (puntos2 >= 3)
+		{
+			if (fd != -1)
+			{
+				close(fd);
+				fd =-1;
+			}
+			exit(0);
+	    		
+	    	}
+	
 	}
 	
 	//Si rebota con la pared derecha es punto para jugador 1
@@ -174,6 +186,17 @@ void CMundo::OnTimer(int value)
 	// Enviar el mensaje al logger
 	sprintf(mensaje,"Jugador 1 marca 1 punto, lleva un total de %d puntos.\n",puntos1);
 	write(fd, mensaje, strlen(mensaje));	
+	
+	// Cerrar la FIFO si el jugador 1 alcanza 3 puntos
+		if (puntos1 >= 3)
+		{
+			if (fd != -1)
+			{
+				close(fd);
+				fd =-1;
+			}
+	    		exit(0);
+	    	}
 			
 	}
 
