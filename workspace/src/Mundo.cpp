@@ -13,6 +13,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+
 //#include <iostream>
 
 //////////////////////////////////////////////////////////////////////
@@ -22,6 +28,9 @@
 CMundo::CMundo()
 {
 	fd = -1;
+	
+	datos = NULL; //
+	
 	Init();
 }
 
@@ -31,6 +40,12 @@ CMundo::~CMundo()
 	if (fd != -1)
 	{
 	close(fd);
+	}
+	
+	// Liberar la memoria compartida de la comunicacion con BOT
+	if (datos != NULL)
+	{
+	munmap(datos, sizeof(DatosMemCompartida));//deshaces la proyeccion
 	}
 }
 
@@ -199,6 +214,28 @@ void CMundo::OnTimer(int value)
 	    	}
 			
 	}
+	
+	////////////Comunicacion con BOT////////////////////////////
+	// Actualizar los datos que observará el robot
+	datos->esfera = esfera;
+	datos->raqueta1 = jugador1;
+
+	// Leer la acción del robot y controlar jugador 2
+	if (datos->accion == 1)
+	{
+		//jugador2.velocidad.y = 4;
+		OnKeyboardDown(0, 0, 1);
+	}
+	else if (datos->accion == -1)
+	{
+		//jugador2.velocidad.y = -4;
+		OnKeyboardDown(0, 0, -1);
+	}
+	//else
+	//{
+	//	jugador2.velocidad.y = 0;
+	//}
+	
 
 }
 
@@ -226,6 +263,13 @@ void CMundo::OnKeyboardDown(unsigned char key, int x, int y)
     	//jugador1.velocidad.y=0;
 	//jugador2.velocidad.y=0;
     	//}
+    	
+    	if (y==-1){
+    		jugador2.velocidad.y=-4;
+    		}
+    	else if (y==1){
+    		jugador2.velocidad.y=4;
+    		}
 }
 
 void CMundo::Init()
@@ -267,4 +311,46 @@ void CMundo::Init()
 	perror("Error al abrir la FIFO");
 	exit(1);
 	}
+	
+	///////////Memoria compartida o proyectada para bot//////////////
+	
+	// Crear el fichero de memoria compartida
+	int fdMem = open("memoria.dat", O_RDWR | O_CREAT, 0666);
+
+	if (fdMem == -1)
+	{
+		perror("Error al crear el fichero de memoria compartida");
+		exit(1);
+	}
+
+	// Establecer el tamaño del fichero
+	// ftruncate devuelve el tamaño en bytes que ocupa la estructura DatosMemCompartida.h
+	if (ftruncate(fdMem, sizeof(DatosMemCompartida)) == -1)
+	{
+		perror("Error en ftruncate");
+		close(fdMem);
+		exit(1);
+	}
+
+	// Proyectar el fichero en memoria 
+	datos = (DatosMemCompartida*)mmap(NULL,sizeof(DatosMemCompartida),
+		PROT_READ | PROT_WRITE,MAP_SHARED,fdMem,0);
+
+	if (datos == MAP_FAILED)
+	{
+		perror("Error en mmap");
+		datos = NULL;
+		close(fdMem);
+		exit(1);
+	}
+
+	// Cerrar el descriptor del fichero
+	close(fdMem);
+
+	// Inicializar los datos compartidos
+	datos->esfera = esfera;
+	datos->raqueta1 = jugador1;
+	datos->accion = 0;
+	
+	
 }

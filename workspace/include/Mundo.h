@@ -15,6 +15,8 @@
 #include "Esfera.h"
 #include "Raqueta.h"
 
+#include "DatosMemCompartida.h"
+
 class CMundo  
 {
 public:
@@ -38,6 +40,9 @@ public:
 	int puntos2;
 	
 	int fd; //descriptor del fifo
+	
+	DatosMemCompartida* datos; //despues de hacer la proyeccion con este puntero
+								//apuntaremos al objeto de la misma clase proyectado
 };
 
 #endif // !defined(AFX_MUNDO_H__9510340A_3D75_485F_93DC_302A43B8039A__INCLUDED_)

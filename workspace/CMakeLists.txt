@@ -18,3 +18,6 @@ TARGET_LINK_LIBRARIES(tenis glut GL GLU)
 
 # Ejecutable del logger
 ADD_EXECUTABLE(logger src/logger.cpp)
+
+# Ejecutable del bot
+ADD_EXECUTABLE(bot src/bot.cpp)

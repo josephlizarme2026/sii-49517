@@ -22,6 +22,7 @@ Implementacion del juego del pang, mejorandolo en cada practica, añadiendo nuev
 -Se crea escenario
 -Se añade dinamica entre objetos del escenario en concreto rebote raqueta pelota
 -Se crea un logger que registre los puntos y se cierra el programa cuando se algun jugador llega a los tres puntos
+-Se crea un nuevo proceso para un bot, que utiliza memoria compartida para pasarle posicion de esfera y jugador 1 y      la accion de subir o bajar (1,-1)
 
 ## 📁 Estructura del proyecto
 
